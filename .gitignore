@@ -1,0 +1,9 @@
+/target/
+/idea.md
+/.agents/
+/.codex/
+/config.yaml
+/state.json
+/history.json
+*.corrupt-*
+__pycache__/

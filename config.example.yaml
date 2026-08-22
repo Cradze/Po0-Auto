@@ -1,0 +1,56 @@
+# 公网 IPv4 查询源会严格按此顺序 fallback。
+ip_sources:
+  - name: bilibili
+    url: https://api.bilibili.com/x/web-interface/zone
+    response: bilibili_json
+    timeout_seconds: 8
+  - name: ipinfo
+    url: https://ipinfo.io/ip
+    response: plain_text
+    timeout_seconds: 8
+  - name: ident
+    url: https://v4.ident.me
+    response: plain_text
+    timeout_seconds: 8
+  - name: aws-checkip
+    url: https://checkip.amazonaws.com
+    response: plain_text
+    timeout_seconds: 8
+  - name: ifconfig
+    url: https://ifconfig.me/ip
+    response: plain_text
+    timeout_seconds: 8
+
+firewall:
+  base_url: https://console.po0.io/modules/servers/penguin/api/firewall.php
+  timeout_seconds: 15
+
+# name 必须唯一；日志和状态文件只记录 name，不记录 token。
+servers:
+  - name: primary
+    token: "REPLACE_WITH_SERVER_TOKEN"
+  # - name: backup
+  #   token: "REPLACE_WITH_ANOTHER_SERVER_TOKEN"
+
+telegram:
+  enabled: false
+  api_base: https://api.telegram.org
+  bot_token: "REPLACE_WITH_NEW_BOT_TOKEN"
+  chat_id: "REPLACE_WITH_CHAT_ID"
+  timeout_seconds: 15
+
+detection:
+  fast_interval_seconds: 300
+  slow_interval_seconds: 1800
+  slow_until_percent: 75
+  history_sample_size: 10
+  retention_days: 7
+  retry_initial_seconds: 30
+  retry_max_seconds: 900
+
+storage:
+  # ImmortalWrt 的 /var 通常指向易失性的 /tmp，状态必须放在持久化目录。
+  state_file: /etc/po0-auto/data/state.json
+  history_file: /etc/po0-auto/data/history.json
+
+user_agent: po0-auto/0.1.0
